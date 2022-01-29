@@ -1,1 +1,1 @@
-worker: nade jediscript.js
+worker: node jediscript.js
