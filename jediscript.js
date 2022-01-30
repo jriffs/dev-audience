@@ -186,6 +186,7 @@ async function get_Stream() {
         (eventData) => {
             console.log(`Tweet recieved -> ${eventData.data.text}`)
             const tweeted = eventData.data.text
+             
             let screened = checkSemantic(tweeted)
             if (screened === 'right syntax') {
                 if (eventData.data.referenced_tweets) {
@@ -263,15 +264,18 @@ async function postTwit(message) {
 
 
 function checkSemantic(string) {
-    let arr = []
-    arr = string.split(' ')
+    let arr = string.split(' ')
+    console.log(arr)
+    let reply_Or_Not = check_if_reply(arr[0])
+    if (reply_Or_Not === 'reply') {
+        arr.shift()
+        console.log(arr)
+    }
     if (arr.includes('~')) {
         let how_many = countInArray(arr, '~')
         if (how_many === 2) {
-            let x = 1
             if (arr[1] === '~' && arr[3] === '~') {
                 return 'right syntax'
-                // console.log('right')
             }else {
                 return 'incorrect syntax'
             }
@@ -286,7 +290,17 @@ function checkSemantic(string) {
     }
 }
 
+function check_if_reply(string) {
+    let arr = string.split(' ')
+    let sub_arr = arr[0].split('')
+    if (sub_arr.includes('@')) {
+        return 'reply'
+    }else {return 'not reply'}
+}
+
 get_Stream()
-/* let res = checkSemantic('#DevAudience ~ update ~ this is an update')
+/* let res = checkSemantic('@Mothers__child #DevAudience ~ answer ~ this is an answer ..')
 console.log(res) */
+
+// check_if_reply('@Mothers__child #DevAudience ~ answer ~ this is an answer ..')
 
