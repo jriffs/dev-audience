@@ -265,11 +265,9 @@ async function postTwit(message) {
 
 function checkSemantic(string) {
     let arr = string.split(' ')
-    console.log(arr)
     let reply_Or_Not = check_if_reply(arr[0])
     if (reply_Or_Not === 'reply') {
-        arr.shift()
-        console.log(arr)
+        arr.shift()        
     }
     if (arr.includes('~')) {
         let how_many = countInArray(arr, '~')
